@@ -1,19 +1,19 @@
 // Sample towns, shops and products for the prototype. Shop names and ratings are made up.
 // closedUntil hides a shop until that date. stock: 0 marks a product sold out.
 const TOWNS = [
-  { id: "mathura", name: "Mathura", state: "Uttar Pradesh", pin: "281001", known: "Peda", icon: "🛕" },
-  { id: "agra", name: "Agra", state: "Uttar Pradesh", pin: "282001", known: "Petha", icon: "🕌" },
-  { id: "bikaner", name: "Bikaner", state: "Rajasthan", pin: "334001", known: "Bhujia", icon: "🐪" },
-  { id: "dharwad", name: "Dharwad", state: "Karnataka", pin: "580001", known: "Pedha", icon: "🌾" },
-  { id: "tirunelveli", name: "Tirunelveli", state: "Tamil Nadu", pin: "627001", known: "Halwa", icon: "🌴" },
-  { id: "channapatna", name: "Channapatna", state: "Karnataka", pin: "562160", known: "Wooden toys", icon: "🪵" },
+  { id: "mathura", name: "Mathura", state: "Uttar Pradesh", pin: "281001", known: "Peda", icon: "temple" },
+  { id: "agra", name: "Agra", state: "Uttar Pradesh", pin: "282001", known: "Petha", icon: "dome" },
+  { id: "bikaner", name: "Bikaner", state: "Rajasthan", pin: "334001", known: "Bhujia", icon: "fort" },
+  { id: "dharwad", name: "Dharwad", state: "Karnataka", pin: "580001", known: "Pedha", icon: "wheat" },
+  { id: "tirunelveli", name: "Tirunelveli", state: "Tamil Nadu", pin: "627001", known: "Halwa", icon: "palm" },
+  { id: "channapatna", name: "Channapatna", state: "Karnataka", pin: "562160", known: "Wooden toys", icon: "horse" },
 ];
 
 const CATEGORIES = [
-  { id: "sweets", name: "Sweets", icon: "🍬" },
-  { id: "namkeen", name: "Namkeen", icon: "🥨" },
-  { id: "gifts", name: "Gift boxes", icon: "🎁" },
-  { id: "crafts", name: "Toys and crafts", icon: "🪀" },
+  { id: "sweets", name: "Sweets", icon: "sweets" },
+  { id: "namkeen", name: "Namkeen", icon: "namkeen" },
+  { id: "gifts", name: "Gift boxes", icon: "gifts" },
+  { id: "crafts", name: "Toys and crafts", icon: "crafts" },
 ];
 
 const SHOPS = [

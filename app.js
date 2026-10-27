@@ -30,6 +30,16 @@ const ICON_PATHS = {
   receipt: '<path d="M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6M9 16h3"/>',
   truck: '<path d="M3 6h11v10H3zM14 9.5h3.8L21 13v3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17.5" cy="18" r="1.8"/>',
   compass: '<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>',
+  sweets: '<circle cx="12" cy="12" r="4.5"/><path d="M7.8 10.3 3 7.5v9l4.8-2.8M16.2 10.3 21 7.5v9l-4.8-2.8"/>',
+  namkeen: '<path d="M3 11h18a9 9 0 0 1-18 0zM8 8.5l1-2.5M12 8V4.5M16 8.5l-1-2.5"/>',
+  gifts: '<path d="M3.5 8.5h17v4h-17zM5 12.5V20h14v-7.5M12 8.5V20M12 8.5C10 4 6.5 4.5 7 7c.3 1.3 2.5 1.5 5 1.5M12 8.5c2-4.5 5.5-4 5-1.5-.3 1.3-2.5 1.5-5 1.5"/>',
+  crafts: '<path d="M12 3v3.5M8.5 6.5h7M4.5 11a7.5 4.5 0 0 0 15 0zM4.5 11 12 21l7.5-10"/>',
+  temple: '<path d="M12 2.5v2M8.5 9 12 4.5 15.5 9M7 9h10v3H7zM5 21v-9h14v9M10 21v-4a2 2 0 0 1 4 0v4M3 21h18"/>',
+  dome: '<path d="M12 3v2M7.5 11a4.5 5 0 0 1 9 0zM6 11h12v10H6zM10.5 21v-4a1.5 1.5 0 0 1 3 0v4M3 7v14M21 7v14M2 21h20"/>',
+  fort: '<path d="M3 21V8h3v2h2V8h3v2h2V8h3v2h2V8h3v13zM10 21v-5a2 2 0 0 1 4 0v5"/>',
+  wheat: '<path d="M12 21V7M12 7c-2-1-3-2.5-3-4.5 2 1 3 2.5 3 4.5zM12 7c2-1 3-2.5 3-4.5-2 1-3 2.5-3 4.5zM12 12c-2.5-.5-4-2.5-4-4.5 2.5.5 4 2.5 4 4.5zM12 12c2.5-.5 4-2.5 4-4.5-2.5.5-4 2.5-4 4.5zM12 17c-2.5-.5-4-2.5-4-4.5 2.5.5 4 2.5 4 4.5zM12 17c2.5-.5 4-2.5 4-4.5-2.5.5-4 2.5-4 4.5z"/>',
+  palm: '<path d="M12 21c0-5 .5-9 1-12M13 9c-2-2.5-5-3-8-2 3 .5 5 1.5 8 2zM13 9c2-2.5 5-3 8-2-3 .5-5 1.5-8 2zM13 9c-1-3-3-5-6-5.5M13 9c1-3 3-5 6-5.5M7 21h11"/>',
+  horse: '<path d="M3.5 18c4.5 3 12.5 3 17 0M7 19.2V13l-1.5-2.5L9 6l2 2h4l2.5 3.5v7.7M7 13h10.5M9 6l-.5-2"/>',
 };
 const icon = (name, cls = "") => `<svg class="i ${cls}" viewBox="0 0 24 24" aria-hidden="true">${ICON_PATHS[name]}</svg>`;
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
@@ -171,8 +181,8 @@ function sorted(list) {
 
 function tiles() {
   return `<div class="tiles">
-    ${CATEGORIES.map((c) => `<a href="#/cat/${c.id}"><span>${c.icon}</span>${esc(c.name)}</a>`).join("")}
-    ${TOWNS.map((t) => `<a href="#/town/${t.id}"><span>${t.icon}</span>${esc(t.name)}</a>`).join("")}
+    ${CATEGORIES.map((c) => `<a href="#/cat/${c.id}" class="cat-tile"><span>${icon(c.icon)}</span>${esc(c.name)}</a>`).join("")}
+    ${TOWNS.map((t) => `<a href="#/town/${t.id}" class="town-tile"><span>${icon(t.icon)}</span>${esc(t.name)}</a>`).join("")}
   </div>`;
 }
 
@@ -184,12 +194,12 @@ function home() {
         <p>Straight from the shop that made them. No warehouses. No middlemen.</p>
         <span class="banner-cta">Shop now</span>
       </div>
-      <span class="banner-art">🍬🥨🎁</span>
+      <span class="banner-art">${icon("sweets")}${icon("namkeen")}${icon("gifts")}</span>
     </a>
     <div class="promos">
-      <a href="#/cat/gifts" style="--tone:#0c831f"><strong>Festive gift boxes</strong><small>Mixed sweets from old shops</small><span>Order now</span><i>🎁</i></a>
-      <a href="#/town/bikaner" style="--tone:#e67700"><strong>Namkeen from Bikaner</strong><small>Fried fresh, packed same day</small><span>Order now</span><i>🥨</i></a>
-      <a href="#/town/channapatna" style="--tone:#1971c2"><strong>Channapatna toys</strong><small>Natural lac colours</small><span>Order now</span><i>🪀</i></a>
+      <a href="#/cat/gifts" style="--tone:#0c831f"><strong>Festive gift boxes</strong><small>Mixed sweets from old shops</small><span>Order now</span><i>${icon("gifts")}</i></a>
+      <a href="#/town/bikaner" style="--tone:#e67700"><strong>Namkeen from Bikaner</strong><small>Fried fresh, packed same day</small><span>Order now</span><i>${icon("namkeen")}</i></a>
+      <a href="#/town/channapatna" style="--tone:#1971c2"><strong>Channapatna toys</strong><small>Natural lac colours</small><span>Order now</span><i>${icon("crafts")}</i></a>
     </div>
     ${tiles()}
     ${rail("Bestsellers", sorted(PRODUCTS.filter((p) => p.best)))}
@@ -206,7 +216,7 @@ function listing(kind, id) {
   view.innerHTML = `
     <div class="listing">
       <nav class="side" aria-label="${isCat ? "Categories" : "Towns"}">
-        ${items.map((x) => `<a href="#/${kind}/${x.id}" class="${x.id === id ? "on" : ""}" ${x.id === id ? 'aria-current="page"' : ""}><span>${x.icon}</span>${esc(x.name)}</a>`).join("")}
+        ${items.map((x) => `<a href="#/${kind}/${x.id}" class="${x.id === id ? "on" : ""}" ${x.id === id ? 'aria-current="page"' : ""}><span>${icon(x.icon)}</span>${esc(x.name)}</a>`).join("")}
       </nav>
       <section class="list-main">
         <div class="list-head">
