@@ -15,6 +15,23 @@ const SIGNUP_URL = "";
 const SYNONYMS = { pedha: "peda", pera: "peda", bhujiya: "bhujia", namkin: "namkeen", halva: "halwa", toy: "toys", sweet: "sweets", gift: "gifts" };
 const TODAY = new Date().toISOString().slice(0, 10);
 
+// One line icon set: 24 by 24, 2px round strokes, coloured by the text around it
+const ICON_PATHS = {
+  search: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/>',
+  cart: '<path d="M3 4h2.2l2.3 11a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.5L20.8 8H6.1"/><circle cx="10" cy="20.5" r="1.2"/><circle cx="17" cy="20.5" r="1.2"/>',
+  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  close: '<path d="M6 6l12 12M18 6 6 18"/>',
+  back: '<path d="M15 5l-7 7 7 7"/>',
+  next: '<path d="M9 5l7 7-7 7"/>',
+  star: '<path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z" fill="currentColor"/>',
+  verified: '<circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.8"/>',
+  store: '<path d="M4 9.5 5.6 4h12.8L20 9.5M4 9.5v10.5h16V9.5M4 9.5h16M9.5 20v-5.5h5V20"/>',
+  box: '<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9zM4 7.5l8 4.5 8-4.5M12 12v9"/>',
+  receipt: '<path d="M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6M9 16h3"/>',
+  truck: '<path d="M3 6h11v10H3zM14 9.5h3.8L21 13v3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17.5" cy="18" r="1.8"/>',
+  compass: '<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>',
+};
+const icon = (name, cls = "") => `<svg class="i ${cls}" viewBox="0 0 24 24" aria-hidden="true">${ICON_PATHS[name]}</svg>`;
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
 const rupees = (n) => `₹${n.toLocaleString("en-IN")}`;
 const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
@@ -124,7 +141,7 @@ function card(p) {
       ${pct ? `<span class="off">${pct}%<br>OFF</span>` : ""}<span class="emoji">${p.icon}</span>
       ${why ? `<span class="why">${esc(why)}</span>` : ""}
     </a>
-    <span class="eta">⏱ ${p.shop.days} DAYS</span>
+    <span class="eta">${icon("clock")} ${p.shop.days} DAYS</span>
     <a href="#/p/${p.key}"><h3>${esc(p.name)}</h3></a>
     <p class="unit">${esc(p.unit)}</p>
     <div class="buy">${priceBlock(p)}<div data-ctl="${p.key}">${control(p.key)}</div></div>
@@ -201,7 +218,7 @@ function listing(kind, id) {
             </select>
           </label>
         </div>
-        ${shops.map((s) => `<a class="shop-strip" href="#/shop/${s.id}"><span class="logo" style="--tone:${s.tone}">${esc(s.name[0])}</span><span><strong>${esc(s.name)}</strong><small>★ ${s.rating} · since ${s.since} · ships in ${s.days} days</small></span><b>›</b></a>`).join("")}
+        ${shops.map((s) => `<a class="shop-strip" href="#/shop/${s.id}"><span class="logo" style="--tone:${s.tone}">${esc(s.name[0])}</span><span><strong>${esc(s.name)}</strong><small>${icon("star", "star")} ${s.rating} · since ${s.since} · ships in ${s.days} days</small></span>${icon("next", "chev")}</a>`).join("")}
         ${grid(sorted(list))}
       </section>
     </div>`;
@@ -221,16 +238,16 @@ function productPage(key) {
       <div class="pdp-img" style="--tone:${p.shop.tone}"><span>${p.icon}</span>${why ? `<span class="why">${esc(why)}</span>` : ""}</div>
       <div class="pdp-info">
         <h1>${esc(p.name)}</h1>
-        <a class="pdp-shop" href="#/shop/${p.shop.id}">${esc(p.shop.name)}, ${esc(t.name)} ›</a>
-        <span class="eta">⏱ Ships in ${p.shop.days} days</span>
+        <a class="pdp-shop" href="#/shop/${p.shop.id}">${esc(p.shop.name)}, ${esc(t.name)} ${icon("next")}</a>
+        <span class="eta">${icon("clock")} Ships in ${p.shop.days} days</span>
         <div class="unit-box"><small>Unit</small><strong>${esc(p.unit)}</strong>${priceBlock(p)}${pct ? `<span class="off-tag">${pct}% OFF</span>` : ""}<small>Inclusive of all taxes</small></div>
         <div class="pdp-buy" data-ctl="${p.key}">${control(p.key)}</div>
         ${why ? `<p class="na-note">${esc(why)}. You can still browse the shop's other products.</p>` : ""}
         <h2>Why buy from Hometown Market?</h2>
         <ul class="whys">
-          <li><span>🏪</span><div><strong>Straight from the shop</strong><small>No warehouse in between. The shop packs your order itself.</small></div></li>
-          <li><span>📦</span><div><strong>Packed to order</strong><small>Made or packed after you order, not taken from old stock.</small></div></li>
-          <li><span>✅</span><div><strong>Verified shops</strong><small>Every shop is checked before it can sell. Food shops need an FSSAI licence.</small></div></li>
+          <li><span>${icon("store")}</span><div><strong>Straight from the shop</strong><small>No warehouse in between. The shop packs your order itself.</small></div></li>
+          <li><span>${icon("box")}</span><div><strong>Packed to order</strong><small>Made or packed after you order, not taken from old stock.</small></div></li>
+          <li><span>${icon("verified")}</span><div><strong>Verified shops</strong><small>Every shop is checked before it can sell. Food shops need an FSSAI licence.</small></div></li>
         </ul>
         <h2>Product details</h2>
         <dl class="details">
@@ -256,7 +273,7 @@ function shopPage(id) {
       <div>
         <h1>${esc(s.name)}</h1>
         <p>${esc(t.name)}, ${esc(t.state)} · since ${s.since}</p>
-        <div class="badges"><span>★ ${s.rating} (${s.reviews.toLocaleString("en-IN")})</span><span>⏱ Ships in ${s.days} days</span><span>✔ Verified</span></div>
+        <div class="badges"><span>${icon("star")} ${s.rating} (${s.reviews.toLocaleString("en-IN")})</span><span>${icon("clock")} Ships in ${s.days} days</span><span>${icon("verified")} Verified</span></div>
       </div>
     </header>
     ${closed ? `<p class="na-note">This shop is closed till ${shortDate(s.closedUntil)}. You can browse but not order.</p>` : ""}
@@ -278,7 +295,7 @@ function searchPage(term) {
   const isPin = /^\d{6}$/.test(term.trim());
   view.innerHTML = `
     <div class="no-results">
-      <span>🔎</span>
+      <span>${icon("search", "big")}</span>
       <h1>${isPin ? `No shops from PIN ${esc(term.trim())} yet` : `Nothing found for "${esc(term)}"`}</h1>
       <p>${isPin ? "We are adding hometowns every week. These are live now:" : "Check the spelling or try a town name. These hometowns are live:"}</p>
       <a class="link" href="#/sell">Know a shop there? Ask them to join</a>
@@ -290,12 +307,12 @@ function searchPage(term) {
 function orderPage(id) {
   const order = load(ORDERS_KEY, {})[id];
   if (!order) {
-    view.innerHTML = `<div class="no-results"><span>📦</span><h1>Order not found</h1><p>Orders are saved on the device they were placed on.</p><a class="cta small" href="#/">Continue shopping</a></div>`;
+    view.innerHTML = `<div class="no-results"><span>${icon("box", "big")}</span><h1>Order not found</h1><p>Orders are saved on the device they were placed on.</p><a class="cta small" href="#/">Continue shopping</a></div>`;
     return;
   }
   view.innerHTML = `
     <div class="order">
-      <div class="order-ok"><span>✅</span><h1>Order placed</h1><p>Order ${esc(id)} · ${new Date(order.at).toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short" })}</p></div>
+      <div class="order-ok"><span>${icon("verified", "big")}</span><h1>Order placed</h1><p>Order ${esc(id)} · ${new Date(order.at).toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short" })}</p></div>
       <p class="na-note">Prototype: no payment was taken and no shop was told about this order.</p>
       ${order.groups.map((g) => `
         <section class="box">
@@ -375,7 +392,7 @@ async function submitSignup(e) {
     return;
   }
   store(SIGNUPS_KEY, [...load(SIGNUPS_KEY, []), phone]);
-  view.innerHTML = `<div class="no-results"><span>🏪</span><h1>Thank you</h1><p>${esc(data.shop)} is in the queue for verification.${SIGNUP_URL ? " We will call you within two working days." : " This prototype does not send the form anywhere yet."}</p><a class="cta small" href="#/">Back to shopping</a></div>`;
+  view.innerHTML = `<div class="no-results"><span>${icon("store", "big")}</span><h1>Thank you</h1><p>${esc(data.shop)} is in the queue for verification.${SIGNUP_URL ? " We will call you within two working days." : " This prototype does not send the form anywhere yet."}</p><a class="cta small" href="#/">Back to shopping</a></div>`;
 }
 
 const cleanPhone = (v) => v.replace(/[\s-]/g, "").replace(/^(\+91|0091|91(?=\d{10}$)|0(?=\d{10}$))/, "");
@@ -396,7 +413,7 @@ function showErrors(form, errors) {
 }
 
 function notFound() {
-  view.innerHTML = `<div class="no-results"><span>🧭</span><h1>Page not found</h1><a class="cta small" href="#/">Back to shopping</a></div>`;
+  view.innerHTML = `<div class="no-results"><span>${icon("compass", "big")}</span><h1>Page not found</h1><a class="cta small" href="#/">Back to shopping</a></div>`;
 }
 
 /* Cart drawer */
@@ -420,9 +437,9 @@ function closeDrawer() {
 
 function drawDrawer() {
   if (drawerStep === "address") return drawAddress();
-  const head = `<header class="d-head"><h2>My Cart</h2><button class="x" data-close aria-label="Close cart">✕</button></header>`;
+  const head = `<header class="d-head"><h2>My Cart</h2><button class="x" data-close aria-label="Close cart">${icon("close")}</button></header>`;
   if (!count()) {
-    drawer.innerHTML = `${head}<div class="d-empty"><span>🛒</span><h3>You don't have any items in your cart</h3><p>Your favourite hometown items are waiting for you</p><button class="cta small" data-close>Start shopping</button></div>`;
+    drawer.innerHTML = `${head}<div class="d-empty"><span>${icon("cart", "big")}</span><h3>You don't have any items in your cart</h3><p>Your favourite hometown items are waiting for you</p><button class="cta small" data-close>Start shopping</button></div>`;
     drawer.querySelector(".x").focus();
     return;
   }
@@ -435,7 +452,7 @@ function drawDrawer() {
       ${saved > 0 ? `<p class="saving">Your total savings <b>${rupees(saved)}</b></p>` : ""}
       ${groups.map((g) => `
         <section class="box">
-          <div class="ship"><span>⏱</span><div><strong>Delivery in ${g.s.days} days</strong><small>From ${esc(g.s.name)}, ${esc(town(g.s.town).name)} · ${plural(g.items.reduce((a, l) => a + l.qty, 0), "item")}</small></div></div>
+          <div class="ship"><span>${icon("clock")}</span><div><strong>Delivery in ${g.s.days} days</strong><small>From ${esc(g.s.name)}, ${esc(town(g.s.town).name)} · ${plural(g.items.reduce((a, l) => a + l.qty, 0), "item")}</small></div></div>
           ${g.items.map((l) => `
             <div class="line">
               <span class="mini" style="--tone:${g.s.tone}">${l.p.icon}</span>
@@ -445,13 +462,13 @@ function drawDrawer() {
         </section>`).join("")}
       <section class="box bill">
         <h3>Bill details</h3>
-        <p class="row"><span>📄 Items total</span><span>${saved > 0 ? `<s>${rupees(mrpTotal())}</s> ` : ""}${rupees(items)}</span></p>
-        <p class="row"><span>🚚 Delivery charge <small>(${plural(groups.length, "shop")} × ${rupees(DELIVERY_PER_SHOP)})</small></span><span>${rupees(delivery)}</span></p>
+        <p class="row"><span>${icon("receipt")} Items total</span><span>${saved > 0 ? `<s>${rupees(mrpTotal())}</s> ` : ""}${rupees(items)}</span></p>
+        <p class="row"><span>${icon("truck")} Delivery charge <small>(${plural(groups.length, "shop")} × ${rupees(DELIVERY_PER_SHOP)})</small></span><span>${rupees(delivery)}</span></p>
         <p class="row grand"><span>Grand total</span><span>${rupees(items + delivery)}</span></p>
       </section>
       <section class="box note"><h3>Good to know</h3><p>Each shop packs and ships its own parcel, so items from different shops arrive separately. We deliver within India only for now.</p></section>
     </div>
-    <footer class="d-foot"><button class="proceed" id="proceed"><span><b>${rupees(items + delivery)}</b><small>TOTAL</small></span><span>Proceed ›</span></button></footer>`;
+    <footer class="d-foot"><button class="proceed" id="proceed"><span><b>${rupees(items + delivery)}</b><small>TOTAL</small></span><span>Proceed ${icon("next")}</span></button></footer>`;
   $("proceed").addEventListener("click", () => { drawerStep = "address"; drawDrawer(); });
 }
 
@@ -459,7 +476,7 @@ function drawAddress() {
   const a = load(ADDRESS_KEY, {});
   const v = (k) => esc(a[k] || "");
   drawer.innerHTML = `
-    <header class="d-head"><button class="x" id="back" aria-label="Back to cart">‹</button><h2>Delivery address</h2><button class="x" data-close aria-label="Close cart">✕</button></header>
+    <header class="d-head"><button class="x" id="back" aria-label="Back to cart">${icon("back")}</button><h2>Delivery address</h2><button class="x" data-close aria-label="Close cart">${icon("close")}</button></header>
     <form id="addr" class="form d-body" novalidate>
       <label>Full name<input name="name" autocomplete="name" value="${v("name")}"><small class="err" data-err="name"></small></label>
       <label>Mobile number<input name="phone" type="tel" autocomplete="tel" value="${v("phone")}"><small class="err" data-err="phone"></small></label>
@@ -469,7 +486,7 @@ function drawAddress() {
       <p class="hint">India only for now. Payment is cash on delivery in this prototype.</p>
       <p class="err form-err" role="alert"></p>
     </form>
-    <footer class="d-foot"><button class="proceed" form="addr" id="place"><span><b>${rupees(itemTotal() + byShop().length * DELIVERY_PER_SHOP)}</b><small>TOTAL</small></span><span>Place order ›</span></button></footer>`;
+    <footer class="d-foot"><button class="proceed" form="addr" id="place"><span><b>${rupees(itemTotal() + byShop().length * DELIVERY_PER_SHOP)}</b><small>TOTAL</small></span><span>Place order ${icon("next")}</span></button></footer>`;
   $("back").addEventListener("click", () => { drawerStep = "cart"; drawDrawer(); });
   $("addr").addEventListener("submit", placeOrder);
   $("addr").elements.name.focus();
@@ -515,11 +532,11 @@ function placeOrder(e) {
 function drawCartButtons() {
   const n = count();
   const total = itemTotal();
-  $("cart-btn").innerHTML = n ? `🛒 <span class="two"><b>${plural(n, "item")}</b>${rupees(total)}</span>` : `🛒 <span>My Cart</span>`;
+  $("cart-btn").innerHTML = n ? `${icon("cart")} <span class="two"><b>${plural(n, "item")}</b>${rupees(total)}</span>` : `${icon("cart")} <span>My Cart</span>`;
   $("cart-btn").setAttribute("aria-label", n ? `Cart, ${plural(n, "item")}, ${rupees(total)}` : "Cart, empty");
   const bar = $("cart-bar");
   bar.hidden = !n || !drawer.hidden;
-  bar.innerHTML = `<span class="bag">🛒</span><span class="two"><b>${plural(n, "item")}</b>${rupees(total)}</span><span>View cart ›</span>`;
+  bar.innerHTML = `<span class="bag">${icon("cart")}</span><span class="two"><b>${plural(n, "item")}</b>${rupees(total)}</span><span>View cart ${icon("next")}</span>`;
 }
 
 /* Events and routing */
