@@ -1,4 +1,5 @@
 // Sample towns, shops and products for the prototype. Shop names and ratings are made up.
+// closedUntil hides a shop until that date. stock: 0 marks a product sold out.
 const TOWNS = [
   { id: "mathura", name: "Mathura", state: "Uttar Pradesh", pin: "281001", known: "Peda", icon: "🛕" },
   { id: "agra", name: "Agra", state: "Uttar Pradesh", pin: "282001", known: "Petha", icon: "🕌" },
@@ -42,7 +43,7 @@ const SHOPS = [
     products: [
       { id: "p1", name: "Classic white petha", unit: "1 kg", price: 260, mrp: 300, life: "30 days", cat: "sweets", icon: "🧊", best: true },
       { id: "p2", name: "Angoori petha", unit: "500 g", price: 220, mrp: 240, life: "20 days", cat: "sweets", icon: "🍇" },
-      { id: "p3", name: "Paan petha", unit: "500 g", price: 280, mrp: 320, life: "20 days", cat: "sweets", icon: "🍃" },
+      { id: "p3", name: "Paan petha", unit: "500 g", price: 280, mrp: 320, life: "20 days", stock: 0, cat: "sweets", icon: "🍃" },
     ],
   },
   {
@@ -61,12 +62,12 @@ const SHOPS = [
     story: "Caramelised milk pedha rolled in sugar, made to a recipe the family brought to Dharwad ninety years ago.",
     products: [
       { id: "p1", name: "Dharwad pedha", unit: "500 g", price: 300, mrp: 340, life: "20 days", cat: "sweets", icon: "🟫", best: true },
-      { id: "p2", name: "Kunda", unit: "500 g", price: 280, mrp: 280, life: "7 days", cat: "sweets", icon: "🍫" },
+      { id: "p2", name: "Kunda", unit: "500 g", price: 280, mrp: 280, life: "5 days", cat: "sweets", icon: "🍫" },
     ],
   },
   {
     id: "nellai-halwa", town: "tirunelveli", name: "Nellai Halwa Kadai", since: 1945, tone: "#c92a2a",
-    rating: 4.6, reviews: 2890, days: 5,
+    rating: 4.6, reviews: 2890, days: 5, closedUntil: "2026-11-03",
     story: "Wheat milk, ghee and Thamirabarani water. The halwa is stirred for hours until it shines.",
     products: [
       { id: "p1", name: "Tirunelveli halwa", unit: "500 g", price: 350, mrp: 400, life: "30 days", cat: "sweets", icon: "🟥", best: true },

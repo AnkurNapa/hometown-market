@@ -5,31 +5,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Hometown Market</title>
   <meta name="description" content="Buy authentic products directly from shops in your hometown.">
-  <meta name="theme-color" content="#3c0a6b">
+  <meta name="theme-color" content="#ffffff">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <p class="strip">Prototype with sample shops. No real orders or payments.</p>
   <header class="top">
     <div class="top-row">
-      <a class="brand" href="#/">hometown<span>market</span></a>
-      <p class="deliver"><strong>Delivering across India</strong><small>from 6 hometowns · prototype, sample shops</small></p>
+      <a class="brand" href="#/" aria-label="Hometown Market home"><b>hometown</b><span>market</span></a>
+      <div class="deliver"><strong>Delivery in 2 to 5 days</strong><small>From 6 hometowns to anywhere in India</small></div>
       <form id="search" class="search" role="search">
+        <span aria-hidden="true">🔍</span>
         <label class="sr-only" for="q">Search</label>
-        <input id="q" type="search" placeholder="Search &quot;peda&quot;, &quot;Agra&quot; or a PIN code" autocomplete="off">
-        <button aria-label="Search">🔍</button>
+        <input id="q" type="search" placeholder="Search &quot;peda&quot;, &quot;Agra&quot; or a PIN code" autocomplete="off" enterkeyhint="search">
       </form>
-      <nav aria-label="Main navigation">
-        <a href="#/sell">🏪<span>Sell</span></a>
-        <a href="#/cart" class="basket">🛒<span>Basket</span><b id="cart-count">0</b></a>
-      </nav>
+      <a class="sell" href="#/sell">Sell with us</a>
+      <button id="cart-btn" class="cart-btn" type="button">🛒 <span>My Cart</span></button>
     </div>
   </header>
   <main id="view"></main>
-  <a id="cart-bar" class="cart-bar" href="#/cart" hidden></a>
-  <footer>Hometown Market prototype. Every shop on this page is sample data.</footer>
+  <button id="cart-bar" class="cart-bar" type="button" hidden></button>
+  <div id="scrim" class="scrim" hidden></div>
+  <aside id="drawer" class="drawer" role="dialog" aria-modal="true" aria-label="My Cart" hidden></aside>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <p id="live" class="sr-only" aria-live="polite"></p>
+  <footer>
+    <nav aria-label="Footer">
+      <a href="#/cat/sweets">Sweets</a><a href="#/cat/namkeen">Namkeen</a><a href="#/cat/gifts">Gift boxes</a><a href="#/cat/crafts">Toys and crafts</a><a href="#/sell">Sell with us</a>
+    </nav>
+    <p>Hometown Market prototype. Every shop on this site is sample data.</p>
+  </footer>
   <script src="data.js"></script>
   <script src="app.js"></script>
 </body>

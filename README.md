@@ -6,10 +6,19 @@ Live site: https://ankurnapa.github.io/hometown-market/
 
 ## What works
 
-- Search shops by town, PIN code or shop name
-- Browse towns and shop pages with each shop's story
-- Basket with quantities and a total, kept in the browser
-- Vendor sign up form with PIN, phone and FSSAI checks
+- Browse by category or hometown, with sorting and product pages
+- Search by product, town or PIN code, with spelling variants such as pedha for peda
+- Cart drawer grouped by shop, delivery charged per shop, up to 10 of each item
+- Checkout with address, phone and PIN checks, saved orders with an order page
+- Vendor sign up with FSSAI required for food shops
+- Closed shops, sold out items and foods that would spoil in transit cannot be ordered
+
+## Edge case checks
+
+    ./checks.sh                                      # local server on port 8811
+    ./checks.sh https://ankurnapa.github.io/hometown-market/
+
+Set `SIGNUP_URL` in `app.js` to a Formspree form URL to receive vendor sign ups.
 
 ## What is not built yet
 
