@@ -564,6 +564,11 @@ function route(scroll = true) {
   if (scroll && page !== "search") window.scrollTo(0, 0);
 }
 
+// Sticky side rails sit just under the header, whose height changes with screen width
+const setTopHeight = () => document.documentElement.style.setProperty("--top-h", `${document.querySelector(".top").offsetHeight}px`);
+window.addEventListener("resize", setTopHeight);
+setTopHeight();
+
 window.addEventListener("hashchange", () => route());
 route();
 if (droppedOnLoad.length) toast(removedMsg(droppedOnLoad, " from your cart"));
